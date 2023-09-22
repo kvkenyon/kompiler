@@ -1,6 +1,9 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Main (main) where
 
-import Lib
+import qualified Data.Text as T
 
 main :: IO ()
-main = someFunc
+main = do
+  putStrLn "KSCOPE KOMPILER"
