@@ -3,9 +3,28 @@
 {-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Syntax where
+module Syntax
+  ( LispVal
+      ( Atom,
+        List,
+        Number,
+        String,
+        Func,
+        Lambda,
+        Nil,
+        Bool
+      ),
+    IFunc,
+    Eval,
+    EnvCtx,
+  )
+where
 
 import Control.Monad.Reader
+  ( MonadIO,
+    MonadReader,
+    ReaderT (ReaderT),
+  )
 import qualified Data.Map as M
 import qualified Data.Text as T
 

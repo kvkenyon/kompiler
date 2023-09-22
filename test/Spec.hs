@@ -4,7 +4,7 @@
 
 module Main (main) where
 
-import Lexer (readExpr)
+import Parser
 import Syntax (LispVal (Atom, Bool, List, Nil, Number, String))
 import Test.Hspec (describe, hspec, it, shouldBe)
 
