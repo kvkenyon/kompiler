@@ -17,6 +17,7 @@ module Syntax
     IFunc,
     Eval,
     EnvCtx,
+    Show,
   )
 where
 

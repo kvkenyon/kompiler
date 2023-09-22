@@ -36,6 +36,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , haskeline
     , hspec
     , mtl
     , parsec
@@ -52,6 +53,7 @@ executable kompiler-exe
   build-depends:
       base >=4.7 && <5
     , containers
+    , haskeline
     , hspec
     , kompiler
     , mtl
@@ -70,6 +72,7 @@ test-suite kompiler-test
   build-depends:
       base >=4.7 && <5
     , containers
+    , haskeline
     , hspec
     , kompiler
     , mtl
