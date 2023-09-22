@@ -18,6 +18,7 @@ data LispVal
   | Lambda IFunc EnvCtx
   | Nil
   | Bool Bool
+  deriving (Eq)
 
 instance Show LispVal where
   show :: LispVal -> String
@@ -36,10 +37,13 @@ showLispVal (Lambda _ _) = "(lambda fn)"
 
 newtype IFunc = IFunc {fn :: [LispVal] -> Eval LispVal}
 
+instance Eq IFunc where
+  (==) :: IFunc -> IFunc -> Bool
+  (==) _ _ = False
+
 type EnvCtx = M.Map T.Text LispVal
 
-newtype Eval a where
-  Eval :: {eval :: ReaderT EnvCtx IO a} -> Eval a
+newtype Eval a = Eval {unEval :: ReaderT EnvCtx IO a}
   deriving
     ( Monad,
       Functor,

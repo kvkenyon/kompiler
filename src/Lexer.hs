@@ -2,12 +2,10 @@
 
 module Lexer where
 
-import Control.Applicative hiding ((<|>))
 import Data.Functor.Identity (Identity)
 import qualified Data.Text as T
 import Syntax
 import Text.Parsec
-import Text.Parsec.Expr
 import qualified Text.Parsec.Language as Lang
 import Text.Parsec.Text
 import qualified Text.Parsec.Token as Tok
@@ -20,8 +18,9 @@ lexer = Tok.makeTokenParser style
 style :: Tok.GenLanguageDef T.Text u Identity
 style =
   Lang.emptyDef
-    { Tok.commentStart = "{--",
-      Tok.commentEnd = "--}",
+    { Tok.commentStart = "{-",
+      Tok.commentEnd = "-}",
+      Tok.commentLine = ";",
       Tok.opStart = Tok.opLetter style,
       Tok.opLetter = oneOf ":!#$%%&*+./<=>?@\\^|-~",
       Tok.identStart = letter <|> oneOf "-+/*=|&><",
@@ -39,8 +38,12 @@ parseAtom = do
 
 parseNumber :: Parser LispVal
 parseNumber = do
-  p <- Tok.integer lexer
-  return (Number p)
+  s <-
+    (char '-' >> return negate)
+      <|> (char '+' >> return id)
+      <|> return id
+  p <- many1 digit
+  return (Number $ s $ read p)
 
 parseString :: Parser LispVal
 parseString = do
@@ -61,10 +64,16 @@ parseQuote = do
   x <- parseExpr
   return $ List [Atom "quote", x]
 
+parseNil :: Parser LispVal
+parseNil = do
+  reservedOp "'"
+  Tok.parens lexer $ Tok.whiteSpace lexer
+  return Nil
+
 parseList :: Parser LispVal
 parseList =
   List . concat
-    <$> Text.Parsec.many1 parseExpr
+    <$> Text.Parsec.many parseExpr
       `sepBy` (char ' ' <|> char '\n')
 
 parseSExp :: Parser LispVal
@@ -75,5 +84,24 @@ parseSExp =
       (Text.Parsec.many parseExpr `sepBy` (char ' ' <|> char '\n'))
 
 parseExpr :: Parser LispVal
-parseExpr = do
-  return Nil
+parseExpr =
+  try parseNumber
+    <|> parseString
+    <|> parseAtom
+    <|> parseReserved
+    <|> try parseNil
+    <|> parseQuote
+    <|> parseSExp
+
+contents :: Parser a -> Parser a
+contents p = do
+  Tok.whiteSpace lexer
+  r <- p
+  eof
+  return r
+
+readExpr :: T.Text -> Either ParseError LispVal
+readExpr = parse (contents parseExpr) "<stdin>"
+
+readExprFile :: T.Text -> Either ParseError LispVal
+readExprFile = parse (contents parseList) "<file>"
