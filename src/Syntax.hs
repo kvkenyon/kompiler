@@ -32,7 +32,7 @@ showLispVal Nil = "Nil"
 showLispVal (Bool True) = "#t"
 showLispVal (Bool False) = "#f"
 showLispVal (Func _) = "(internal fn)"
-showLispVal (Lambda _ _) = "(lambda)"
+showLispVal (Lambda _ _) = "(lambda fn)"
 
 newtype IFunc = IFunc {fn :: [LispVal] -> Eval LispVal}
 
