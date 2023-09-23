@@ -3,11 +3,36 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    name: llvm-hs
+    pantry-tree:
+      sha256: 21f74a6f51fae6c0a0fcf3e6620a59f341289ac743998b41ed3276fd1b7d8862
+      size: 12716
+    sha256: 67c53fb0a2f7fbf9d449638881370c621273d280fa9877c5bb7114d8bfa999c3
+    size: 9882871
+    subdir: llvm-hs
+    url: https://github.com/llvm-hs/llvm-hs/archive/refs/heads/llvm-15.zip
+    version: 15.0.0
+  original:
+    subdir: llvm-hs
+    url: https://github.com/llvm-hs/llvm-hs/archive/refs/heads/llvm-15.zip
+- completed:
+    name: llvm-hs-pure
+    pantry-tree:
+      sha256: b512f9e5f8f2b3e3a06bad2fa5ff053a83d817798c7efcd47e254e68c842169d
+      size: 2712
+    sha256: 67c53fb0a2f7fbf9d449638881370c621273d280fa9877c5bb7114d8bfa999c3
+    size: 9882871
+    subdir: llvm-hs-pure
+    url: https://github.com/llvm-hs/llvm-hs/archive/refs/heads/llvm-15.zip
+    version: 15.0.0
+  original:
+    subdir: llvm-hs-pure
+    url: https://github.com/llvm-hs/llvm-hs/archive/refs/heads/llvm-15.zip
 snapshots:
 - completed:
-    sha256: 9313df78f49519315342f4c51ffc5da12659d3735f8ac3c54a1fb98ff874474e
-    size: 640036
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/21/12.yaml
-  original:
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/21/12.yaml
+    sha256: dad15e2ec0c09280a5c2e07190fb18710fc54472f029f34f861f686540824d81
+    size: 649592
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/20/16.yaml
+  original: lts-20.16

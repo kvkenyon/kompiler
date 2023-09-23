@@ -20,13 +20,15 @@ extra-source-files:
 description: Please see the README on GitHub at <https://github.com/githubuser/kompiler#readme>
 
 dependencies:
-  - base >= 4.7 && < 5
+  - base
   - parsec
   - text
   - containers
   - mtl
   - hspec
   - haskeline
+  - llvm-hs
+  - llvm-hs-pure
 
 ghc-options:
   - -Wall
